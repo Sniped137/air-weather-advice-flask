@@ -1,0 +1,29 @@
+
+  <h2>Login or Register</h2>
+  {% if login_form %}
+    <form id="login-form" method="post" action="{{ url_for('auth') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="action" value="login">
+      <h3>Login</h3>
+      <label for="login-email">Email:</label>
+      <input type="email" name="email" id="login-email">
+      <label for="login-password">Password:</label>
+      <input type="password" name="password" id="login-password">
+      <button type="submit">Login</button>
+      <p>Don't have an account? <a href="{{ url_for('auth', form='register') }}">Register</a></p>
+    </form>
+  {% else %}
+    <form id="register-form" method="post" action="{{ url_for('auth') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="action" value="register">
+      <h3>Register</h3>
+      <label for="register-name">Name:</label>
+      <input type="text" name="name" id="register-name">
+      <label for="register-email">Email:</label>
+      <input type="email" name="email" id="register-email">
+      <label for="register-password">Password:</label>
+      <input type="password" name="password" id="register-password">
+      <button type="submit">Register</button>
+      <p>Already have an account? <a href="{{ url_for('auth', form='login') }}">Login</a></p>
+    </form>
+ 

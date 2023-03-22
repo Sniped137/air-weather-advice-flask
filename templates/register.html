@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="content" role="main" class="w-full max-w-md mx-auto p-6">
+    <div class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <div class="p-4 sm:p-7">
+        <div class="text-center">
+          <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Sign up</h1>
+          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+            Already have an account?
+            <a class="text-blue-600 decoration-2 hover:underline font-medium" href="{{ url_for('login') }}">
+              Sign in here
+            </a>
+          </p>
+        </div>
+
+        <div class="mt-5">
+          <button type="button" class="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+            <svg class="w-4 h-auto" width="46" height="47" viewBox="0 0 46 47" fill="none">
+              <path d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z" fill="#4285F4" />
+              <path d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z" fill="#34A853" />
+              <path d="M10.1212 28.1413C9.62245 26.6725 9.32908 25.1156 9.32908 23.5C9.32908 21.8844 9.62245 20.3275 10.0918 18.8588V18.5356L2.75765 12.8369L2.52296 12.9544C0.909439 16.1269 0 19.7106 0 23.5C0 27.2894 0.909439 30.8731 2.49362 34.0456L10.1212 28.1413Z" fill="#FBBC05" />
+              <path d="M23.4694 9.07688C27.8699 9.07688 30.8622 10.9863 32.5344 12.5725L39.1645 6.11C35.0867 2.32063 29.8061 0 23.4694 0C14.287 0 6.36607 5.2875 2.49362 12.9544L10.0918 18.8588C11.9987 13.1894 17.25 9.07688 23.4694 9.07688Z" fill="#EB4335" />
+            </svg>
+            Sign up with Google
+          </button>
+
+          <div class="py-3 flex items-center text-xs text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:border-gray-200 before:mr-6 after:flex-[1_1_0%] after:border-t after:border-gray-200 after:ml-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">Or</div>
+          
+
+            {% if response["checkbox_error"]%}
+            <div id="alert-div">
+              <div class="bg-red-100 border border-red-200 rounded-md p-3" role="alert">
+                  <div class="flex">
+                      <div class="flex-shrink-0">
+                          <svg class="h-4 w-4 text-red-400 mt-0.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+                          </svg>
+                      </div>
+                      <div class="ml-4">
+                          <h3 class="text-sm text-yellow-800 font-semibold"> {{ response["checkbox_error"]}}  </h3>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          {% endif %}
+
+
+
+<form action="{{ url_for('register') }}" method="post" autocomplete="off">
+  <div class="grid gap-y-4">
+    <div>
+      <label for="email" class="block text-sm mb-2 mt-4 dark:text-white font-semibold">Email Address</label>
+        {% if response["email_error"] %}
+        <div class="relative">
+          <div class="form-group">
+            <input type="text" id="email" name="email" class="py-3 px-4 block w-full border-red-500 rounded-md text-sm focus:border-red-500 focus:ring-red-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">            
+          </div>
+          <p class="text-sm text-red-600 mt-2" id="email-error">{{ response["email_error"] }}</p>
+        {% else %}
+        <div class="relative">
+          <div class="form-group">
+            <input type="text" name="email" value="{{ request.form.get('email', '') }}" id="email" class="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" >
+          </div>
+          <p class="text-sm text-red-600 mt-2 hidden" id="email-error"></p>
+        {% endif %}
+      </div>
+    </div>
+
+      <div>
+        <label for="username" class="block text-sm mb-2 dark:text-white font-semibold">Username</label>
+          {% if response["username_error"] %}   
+          <div class="relative">
+            <div class="form-group">
+              <input type="text" id="username" name="username" class="py-3 px-4 block w-full border-red-500 rounded-md text-sm focus:border-red-500 focus:ring-red-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">            
+            </div>
+            <p class="text-sm text-red-600 mt-2" id="username-error">{{ response["username_error"] }}</p>
+          {% else %}
+          <div class="relative">
+            <div class="form-group">
+              <input type="text" name="username" value="{{ request.form.get('username', '') }}" id="username" class="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" aria-describedby="username-error">
+            </div>
+
+            <p class="text-sm text-red-600 mt-2 hidden" id="username-error"></p>
+          {% endif %}
+        </div>
+      </div>      
+
+    <div>
+      <label for="password" class="block text-sm mb-2 dark:text-white font-semibold">Password</label>
+      {% if response["password_error"] %}
+      <div class="relative">
+        <div class="form-group">
+          <input type="password" name="password" id="password" class="py-3 px-4 block w-full border-red-500 rounded-md text-sm focus:border-red-500 focus:ring-red-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">            
+        </div>
+        <div class="absolute inset-y-0 right-0 flex items-center pr-3" style="z-index: 2; left: calc(100% - 2.5rem);">
+          <svg class="toggle-password cursor-pointer dark:fill-white" cursor width="75%" height="75%" version="1.1" viewBox="0 0 20 20" x="0px" y="0px" class="ScIconSVG-sc-1q25cff-1 dSicFr"><g><path d="M11.998 10a2 2 0 11-4 0 2 2 0 014 0z"></path><path d="M16.175 7.567L18 10l-1.825 2.433a9.992 9.992 0 01-2.855 2.575l-.232.14a6 6 0 01-6.175 0 35.993 35.993 0 00-.233-.14 9.992 9.992 0 01-2.855-2.575L2 10l1.825-2.433A9.992 9.992 0 016.68 4.992l.233-.14a6 6 0 016.175 0l.232.14a9.992 9.992 0 012.855 2.575zm-1.6 3.666a7.99 7.99 0 01-2.28 2.058l-.24.144a4 4 0 01-4.11 0 38.552 38.552 0 00-.239-.144 7.994 7.994 0 01-2.28-2.058L4.5 10l.925-1.233a7.992 7.992 0 012.28-2.058 37.9 37.9 0 00.24-.144 4 4 0 014.11 0l.239.144a7.996 7.996 0 012.28 2.058L15.5 10l-.925 1.233z" fill-rule="evenodd" clip-rule="evenodd"></path></g></svg>                                                   
+        </div>
+      </div>
+      <p class="text-sm text-red-600 mt-2" id="password-error">{{ response["password_error"] }}</p>
+      {% else %}
+      <div class="relative">
+        <div class="form-group">
+          <input type="password" name="password" id="password" class="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400" aria-describedby="username-error">
+        </div>
+        <div class="absolute inset-y-0 right-0 flex items-center pr-3" style="z-index: 2; left: calc(100% - 2.5rem);">
+          <svg class="toggle-password cursor-pointer dark:fill-white" cursor width="75%" height="75%" version="1.1" viewBox="0 0 20 20" x="0px" y="0px" class="ScIconSVG-sc-1q25cff-1 dSicFr"><g><path d="M11.998 10a2 2 0 11-4 0 2 2 0 014 0z"></path><path d="M16.175 7.567L18 10l-1.825 2.433a9.992 9.992 0 01-2.855 2.575l-.232.14a6 6 0 01-6.175 0 35.993 35.993 0 00-.233-.14 9.992 9.992 0 01-2.855-2.575L2 10l1.825-2.433A9.992 9.992 0 016.68 4.992l.233-.14a6 6 0 016.175 0l.232.14a9.992 9.992 0 012.855 2.575zm-1.6 3.666a7.99 7.99 0 01-2.28 2.058l-.24.144a4 4 0 01-4.11 0 38.552 38.552 0 00-.239-.144 7.994 7.994 0 01-2.28-2.058L4.5 10l.925-1.233a7.992 7.992 0 012.28-2.058 37.9 37.9 0 00.24-.144 4 4 0 014.11 0l.239.144a7.996 7.996 0 012.28 2.058L15.5 10l-.925 1.233z" fill-rule="evenodd" clip-rule="evenodd"></path></g></svg>                                                   
+        </div>
+      </div>
+      <p class="text-sm text-red-600 mt-2 hidden" id="password-error"></p>
+    {% endif %}
+    </div>
+        <ul class="my-24">
+          <li class="flex items-center space-x-2">
+            <svg class="flex-shrink-0 h-6 w-6 text-red-500" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M15.1965 7.85999C15.1965 3.71785 11.8387 0.359985 7.69653 0.359985C3.5544 0.359985 0.196533 3.71785 0.196533 7.85999C0.196533 12.0021 3.5544 15.36 7.69653 15.36C11.8387 15.36 15.1965 12.0021 15.1965 7.85999Z" fill="currentColor" fill-opacity="0.1"/>
+              <path d="M3 3 L13 13 M3 13 L13 3" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+            <span class="text-gray-600 dark:text-gray-400 text-sm">
+              At least 8 characters
+            </span>
+          </li>
+        
+            <li class="flex items-center space-x-2">
+              <svg class="flex-shrink-0 h-6 w-6 text-red-500" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.1965 7.85999C15.1965 3.71785 11.8387 0.359985 7.69653 0.359985C3.5544 0.359985 0.196533 3.71785 0.196533 7.85999C0.196533 12.0021 3.5544 15.36 7.69653 15.36C11.8387 15.36 15.1965 12.0021 15.1965 7.85999Z" fill="currentColor" fill-opacity="0.1"/>
+                <path d="M3 3 L13 13 M3 13 L13 3" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+              <span class="text-gray-600 dark:text-gray-400 text-sm">
+                One uppercase character
+              </span>
+            </li>
+        
+            <li class="flex items-center space-x-2">
+              <svg class="flex-shrink-0 h-6 w-6 text-red-500" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15.1965 7.85999C15.1965 3.71785 11.8387 0.359985 7.69653 0.359985C3.5544 0.359985 0.196533 3.71785 0.196533 7.85999C0.196533 12.0021 3.5544 15.36 7.69653 15.36C11.8387 15.36 15.1965 12.0021 15.1965 7.85999Z" fill="currentColor" fill-opacity="0.1"/>
+                <path d="M3 3 L13 13 M3 13 L13 3" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+              <span class="text-gray-600 dark:text-gray-400 text-sm">
+                One number
+              </span>
+
+              <li class="flex items-center space-x-2">
+                <svg class="flex-shrink-0 h-6 w-6 text-red-500" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15.1965 7.85999C15.1965 3.71785 11.8387 0.359985 7.69653 0.359985C3.5544 0.359985 0.196533 3.71785 0.196533 7.85999C0.196533 12.0021 3.5544 15.36 7.69653 15.36C11.8387 15.36 15.1965 12.0021 15.1965 7.85999Z" fill="currentColor" fill-opacity="0.1"/>
+                  <path d="M3 3 L13 13 M3 13 L13 3" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+                <span class="text-gray-600 dark:text-gray-400 text-sm">
+                  One special character
+                </span>
+            </li>
+          </ul>
+              
+              <div class="flex items-center">
+                <div class="flex">
+                  <input id="checkbox" type="checkbox" name="checkbox" class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-checkbox-group-1">     </div> 
+                  <div class="ml-3">   
+                  <label for="remember-me" class="text-sm text-gray-600 dark:text-gray-400">I accept the <a class="text-blue-600 decoration-2 hover:underline font-medium" href="#">Terms and Conditions</a></label> 
+                </div>
+              </div>
+
+              
+              <button  type="submit" class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">Sign up</button>
+            </div>
+          <form action="{{ url_for('register') }}" method="post" autocomplete="off">
+
+        </div>
+      </div>
+    </div>    
+  </main>
+
+  <script src="{{ url_for('static',filename='js/register.js') }}"></script>
+
+{% endblock %}
+
+

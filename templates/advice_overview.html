@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Title -->
+  <title> title </title>
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="../../favicon.ico">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Animate CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Link your Tailwind CSS file -->
+  <link rel="stylesheet" href="{{url_for('static',filename='dist/css/output.css')}}"></head>
+
+</head>
+</head>
+
+<!-- sticky-top navbar displaying the counter -->
+<nav class="navbar navbar-light bg-light sticky-top">
+  <div class="container">
+    <a class="navbar-brand" id="loaded" href="#">0 items loaded</a>
+  </div>
+</nav>
+
+<body>
+
+  <main class="mt-3">
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+
+          <h1 class="display-4 mb-3">Infinite load</h1>          
+
+          <!-- div to contain the content -->
+          <div id="scroller" class="mb-3">
+            <template id="post_template">
+            <div>
+                <div id="post1">
+                    <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+                        <!-- Grid -->
+                        <div class="grid lg:grid-cols-2 lg:gap-y-16 gap-10">
+                        <!-- Card -->
+                        <a class="group rounded-xl overflow-hidden" href="#">
+                            <div class="sm:flex">
+                            <div class="flex-shrink-0 relative rounded-xl overflow-hidden w-full sm:w-56 h-44">
+                                <img class="group-hover:scale-105 transition-transform duration-500 ease-in-out w-full h-full absolute top-0 left-0 object-cover rounded-xl" src="https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80" alt="Image Description">
+                            </div>
+                    
+                            <div class="grow mt-4 sm:mt-0 sm:ml-6 px-4 sm:px-0">
+                                <h3 class="text-xl font-semibold text-gray-800 group-hover:text-gray-600 dark:text-gray-300 dark:group-hover:text-white" id="title1"></h3>
+                                <p class="mt-3 text-gray-600 dark:text-gray-400" id="content1"></p>
+                                <p class="mt-4 inline-flex items-center gap-x-1.5 text-blue-600 decoration-2 hover:underline font-medium">
+                                Read more
+                                <svg class="w-2.5 h-2.5" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                    <path d="M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                </p>
+                            </div>
+                            </div>
+                        </a>
+                        </div>
+                <div id="post2">
+                    <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+                        <div class="grid lg:grid-cols-2 gap-6">
+                        <a class="group sm:flex" href="#">
+                            <div class="flex-shrink-0 relative rounded-xl overflow-hidden w-full h-[200px] sm:w-[250px] sm:h-[350px]">
+                            <img class="w-full h-full absolute top-0 left-0 object-cover" src="https://images.unsplash.com/photo-1664574654529-b60630f33fdb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80" alt="Image Description">
+                            </div>
+                            <div class="grow">
+                            <div class="p-4 flex flex-col h-full sm:p-6">
+                                <div class="mb-3">
+                                <p class="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-md text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-2002"></p>
+                                </div>
+                                <h3 class="text-lg sm:text-2xl font-semibold text-gray-800 group-hover:text-blue-600 dark:text-gray-300 dark:group-hover:text-white" id="title2"></h3>
+                                <p class="mt-2 text-gray-600 dark:text-gray-400" id="content2"></p>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            </template>
+          </div>
+
+
+
+
+          
+          <!-- element to trigger the IntersectionObserver -->
+          <div class="d-flex justify-content-center mb-3" id="sentinel">
+            <div class="spinner-border" role="status"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Import Bootstrap JS here -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+
+  <script>
+      // Get references to the dom elements
+  var scroller = document.querySelector("#scroller");
+  var template = document.querySelector('#post_template');
+  var loaded = document.querySelector("#loaded");
+  var sentinel = document.querySelector('#sentinel');
+
+  // Set a counter to count the items loaded
+  var counter = 0;
+
+  // Function to request new items and render to the dom
+  function loadItems() {
+
+    // Use fetch to request data and pass the counter value in the QS
+    fetch(`/load?c=${counter}`).then((response) => {
+
+      // Convert the response data to JSON
+      response.json().then((data) => {
+        console.log(data)
+
+        // If empty JSON, exit the function
+        if (!data.length) {
+
+          // Replace the spinner with "No more posts"
+          sentinel.innerHTML = "No more posts";
+          return;
+        }
+
+        // Iterate over the items in the response
+        for (var i = 0; i < data.length; i+= 2) {
+
+          // Clone the HTML template
+            let template_clone = template.content.cloneNode(true);
+
+          // Query & update the template content
+            // template_clone.querySelector(`#title${i/2+1}`).innerHTML = `${data[i][0]}: ${data[i][1]}`;
+            // template_clone.querySelector(`#content${i/2+1}`).innerHTML = data[i][2];
+            // template_clone.querySelector(`#title${i/2+2}`).innerHTML = `${data[i+1][0]}: ${data[i+1][1]}`;
+            // template_clone.querySelector(`#content${i/2+2}`).innerHTML = data[i+1][2];
+        if (i + 1 < data.length) {
+          template_clone.querySelector("#title1").innerHTML = data[i][0];
+          template_clone.querySelector("#content1").innerHTML = data[i][1]; 
+          template_clone.querySelector("#title2").innerHTML = data[i+1][0];
+          template_clone.querySelector("#content2").innerHTML = data[i+1][1];
+        } else {
+        template_clone.querySelector("#post1").style.display = "none";
+          template_clone.querySelector("#post2").style.display = "none";
+        }
+
+
+          // Append template to dom
+            scroller.appendChild(template_clone);
+
+          // Increment the counter
+            counter += 2;
+
+          // Update the counter in the navbar
+            loaded.innerText = `${counter} items loaded`;
+
+        }
+      })
+    })
+  }
+
+  // Create a new IntersectionObserver instance
+  var intersectionObserver = new IntersectionObserver(entries => {
+
+    // Uncomment below to see the entry.intersectionRatio when
+    // the sentinel comes into view
+
+    // entries.forEach(entry => {
+    //   console.log(entry.intersectionRatio);
+    // })
+
+    // If intersectionRatio is 0, the sentinel is out of view
+    // and we don't need to do anything. Exit the function
+    if (entries[0].intersectionRatio <= 0) {
+      return;
+    }
+
+    // Call the loadItems function
+    loadItems();
+
+  });
+
+  // Instruct the IntersectionObserver to watch the sentinel
+  intersectionObserver.observe(sentinel);
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+    <div id="div1-container"></div>
+    <div id="div2-container"></div>
+    <div id="div3-container"></div>
+
+<script>
+
+function loadDivContent(divId) {
+    $.getJSON('/data', function(data) {
+        var content = data[divId];
+        $('#' + divId + '-container').html(content);
+    });
+}
+
+$(window).scroll(function() {
+    var div1Top = $('#div1-container').offset().top;
+    var div2Top = $('#div2-container').offset().top;
+    var div3Top = $('#div3-container').offset().top;
+    var scrollTop = $(window).scrollTop();
+    var windowHeight = $(window).height();
+    if (scrollTop + windowHeight > div1Top && !$('#div1-container').html()) {
+        loadDivContent('div1');
+    }
+    if (scrollTop + windowHeight > div2Top && !$('#div2-container').html()) {
+        loadDivContent('div2');
+    }
+    if (scrollTop + windowHeight > div3Top && !$('#div3-container').html()) {
+        loadDivContent('div3');
+    }
+});
+
+
+</script>
+</body>
+</html>
